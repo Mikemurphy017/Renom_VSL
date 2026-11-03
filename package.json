@@ -1,0 +1,9 @@
+{
+  "name": "renom-vsl",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Renom Video VSL landing page for Meta ads",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" }
+}
