@@ -74,7 +74,7 @@ document.getElementById('ctaText').textContent=FUNNEL.ctaText;
 // carry UTMs / fbclid from the ad through to signup
 var url=FUNNEL.ctaUrl, q=location.search.replace(/^\?/,'').replace(/(^|&)cta=1/,'');
 if(q) url+=(url.indexOf('?')>-1?'&':'?')+q;
-document.querySelectorAll('#ctaBtn,[data-cta]').forEach(function(a){a.href=url;
+document.querySelectorAll('#ctaBtn,[data-cta]').forEach(function(a){a.href=url;a.target="_blank";a.rel="noopener";
   a.addEventListener('click',function(){try{window.fbq&&fbq('track','Lead',{content_name:'Renom VSL CTA'})}catch(e){}})});
 
 // optional delayed CTA, based on watch time
