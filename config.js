@@ -3,7 +3,7 @@ window.FUNNEL = {
   ctaUrl: "https://www.renom.video/signup", // your free-trial signup link (or a demo booking link)
   ctaText: "Start My Free 7-Day Trial",
   ctaDelaySeconds: 0,                  // 0 = button shows right away (like the STA page). Set e.g. 120 to reveal at the pitch.
-  metaPixelId: ""                      // e.g. 123456789012345
+  metaPixelId: "400712735043923"       // Meta Pixel (PageView here; CompleteRegistration fires on the signup success page)
 };
 /* ===== Meta Pixel (loads only if an ID is set) ===== */
 (function(){var id=window.FUNNEL.metaPixelId;if(!id)return;
