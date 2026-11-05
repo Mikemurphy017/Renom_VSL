@@ -1,6 +1,6 @@
 /* ===== EDIT THESE ===== */
 window.FUNNEL = {
-  ctaUrl: "https://www.renom.video",   // your free-trial signup link (or a demo booking link)
+  ctaUrl: "https://www.renom.video/signup", // your free-trial signup link (or a demo booking link)
   ctaText: "Start My Free 7-Day Trial",
   ctaDelaySeconds: 0,                  // 0 = button shows right away (like the STA page). Set e.g. 120 to reveal at the pitch.
   metaPixelId: ""                      // e.g. 123456789012345
