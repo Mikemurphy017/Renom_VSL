@@ -11,7 +11,8 @@ window.FUNNEL = {
   // Where to send people once they've booked
   thankYouPage: "thank-you.html",
   // Google Apps Script web app that writes each lead to the sheet
-  // (see tools/google-sheets-lead-webhook.gs). Renom leads go to the "Renom Leads" tab.
+  // (see tools/google-sheets-lead-webhook.gs). TEMPORARY: this is still the TextTonality
+  // sheet's URL. Replace it with the /exec URL from the "Renom Video – Meta Ad Leads" sheet.
   leadWebhookUrl: "https://script.google.com/macros/s/AKfycbzw33zhCvBpzP-HWEXpTxUHq2D4zglaNPjbxtWTWUx64XgiUPWuRxGXS8Tl1DMvq6fx/exec",
   leadSource: "Renom VSL - Meta",
   leadStoreKey: "renom_lead",
