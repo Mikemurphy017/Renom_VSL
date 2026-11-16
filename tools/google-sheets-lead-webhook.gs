@@ -1,0 +1,59 @@
+/**
+ * Google Sheets lead webhook for the TextTonality and Renom Video VSL pages.
+ *
+ * Setup:
+ *  1. Create a Google Sheet. Extensions > Apps Script. Paste this file in, Save.
+ *  2. Deploy > New deployment > type "Web app".
+ *       Execute as: Me      Who has access: Anyone
+ *  3. Authorize, then copy the Web app URL (ends in /exec).
+ *  4. Paste it into leadWebhookUrl (index.html for TextTonality, config.js for Renom).
+ *
+ * If you change this script later: Deploy > Manage deployments > edit > New version
+ * (keeps the same URL).
+ */
+
+var SCRIPT_VERSION = 'v3 (Meta Leads + Renom Leads tabs)';
+var SHEET_NAME = 'Leads';            // main site (LinkedIn ads)
+var META_SHEET_NAME = 'Meta Leads';  // Meta ads site (source ends in "- Meta")
+var RENOM_SHEET_NAME = 'Renom Leads'; // Renom Video VSL (source starts with "Renom")
+var COLUMNS = [
+  'submitted_at', 'name', 'first_name', 'last_name', 'email', 'phone',
+  'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
+  'fbclid', 'li_fat_id', 'source', 'page_url'
+];
+
+// Open the /exec URL in a browser to check the setup.
+function doGet() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var msg = ss
+    ? 'OK: lead webhook ' + SCRIPT_VERSION + ' is live and connected to the sheet "' + ss.getName() + '".'
+    : 'NOT CONNECTED: this script is not attached to a Google Sheet. ' +
+      'Open your sheet, go to Extensions > Apps Script, paste the script there, and deploy it from there.';
+  return ContentService.createTextOutput(msg);
+}
+
+function doPost(e) {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var p = (e && e.parameter) || {};
+    var src = p.source || '';
+    var tab = /^Renom/.test(src) ? RENOM_SHEET_NAME
+            : /- Meta$/.test(src) ? META_SHEET_NAME
+            : SHEET_NAME;
+    var sheet = ss.getSheetByName(tab) || ss.insertSheet(tab);
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(COLUMNS);
+      sheet.setFrozenRows(1);
+    }
+    sheet.appendRow(COLUMNS.map(function (c) {
+      var v = p[c] || '';
+      // Stop Sheets from treating values like "+16105551234" or "=..." as formulas
+      return /^[=+\-@]/.test(v) ? "'" + v : v;
+    }));
+    return ContentService.createTextOutput('ok');
+  } finally {
+    lock.releaseLock();
+  }
+}
